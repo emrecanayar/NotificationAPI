@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E1AEEFA2-4C4C-4CF8-BAB5-D797A2B53A00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{01B4A0AC-C305-4FB8-B37D-FDF7EA03AA89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{0AA0C287-DA3D-4835-AE19-0381E5151340}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.EmailAPI", "src\Services\Notification.EmailAPI\Notification.EmailAPI.csproj", "{CFB94BD7-6EB0-4AC2-A561-1B201B0797C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFB94BD7-6EB0-4AC2-A561-1B201B0797C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFB94BD7-6EB0-4AC2-A561-1B201B0797C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFB94BD7-6EB0-4AC2-A561-1B201B0797C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFB94BD7-6EB0-4AC2-A561-1B201B0797C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AA0C287-DA3D-4835-AE19-0381E5151340} = {E1AEEFA2-4C4C-4CF8-BAB5-D797A2B53A00}
+		{CFB94BD7-6EB0-4AC2-A561-1B201B0797C3} = {0AA0C287-DA3D-4835-AE19-0381E5151340}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4568A89-4B7C-4340-9491-B78DB66280D4}
+	EndGlobalSection
+EndGlobal
