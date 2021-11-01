@@ -12,6 +12,8 @@ namespace Notification.PushAPI.Dtos
         public string NotificationTypes { get; set; }
         public  string Message   { get; set; }
 
+        public string UserId { get; set; }
+
 
 
 

@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Notification.Send.PushAPI.Applicataion.Abstract;
+using Notification.Send.PushAPI.Applicataion.Concrete;
+using Notification.Send.PushAPI.Applicataion.Consumers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +30,32 @@ namespace Notification.Send.PushAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+
+            //Default port => 5672
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<SendPushMessageCommandConsumer>();
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest");
+                        host.Password("guest");
+                    });
+
+                    cfg.ReceiveEndpoint("send-push-service", e =>
+                    {
+                        e.ConfigureConsumer<SendPushMessageCommandConsumer>(context);
+                    });
+                });
+            });
+
+
+
+            services.AddMassTransitHostedService();
+
+            services.AddTransient<INotificationPublisherService, NotificationPublisherService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
