@@ -1,21 +1,13 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SKNotify.Models;
 
 namespace Notification.Shared.CommandMessages
-{
+{ 
     public class SendPushMessageCommand
     {
-
-        public List<BaseSKNotificationRequestDto> Notifications { get; set; }
-
-        public string TenantId { get; set; }
-
-        public string UserId { get; set; }
-
+        public SKNotify.Models.Notification notification { get; set; }
+        public Data data { get; set; }
+        public Android android { get; set; }
+        public Apns apns { get; set; }
 
     }
 }

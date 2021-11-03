@@ -48,7 +48,7 @@ namespace Notification.PushAPI
                         host.Username("guest");
                         host.Password("guest");
                     });
-
+                    cfg.AutoDelete = true;
                  
                 });
             });

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Notification.Send.PushAPI.Applicataion.Abstract;
 using Notification.Shared.CommandMessages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,46 +11,60 @@ namespace Notification.Send.PushAPI.Applicataion.Concrete
 {
     public class NotificationPublisherService : INotificationPublisherService
     {
-        private readonly IConfiguration _configuration;
-
-
-        public NotificationPublisherService(IConfiguration configuration)
+        private IConfiguration Configuration { get; }
+        private ILogger<NotificationPublisherService> _logger;
+        public NotificationPublisherService(IConfiguration configuration, ILogger<NotificationPublisherService> logger)
         {
-
-            _configuration = configuration;
-
-
+            Configuration = configuration;
+            _logger = logger;
         }
 
-        public async Task SendNotificationAsync(SKNotificationRequestDto notification)
+        public async Task<bool> NotifyAsync(string to, string title, string body)
         {
+            var fireCnf = Configuration.GetSection("FireBase");
 
-            var baseUrl = _configuration.GetValue<string>("FowNotificationServiceBaseUrl");
 
-            string serverKey = _configuration.GetValue<string>("ServerKey");
+            var serverKey = string.Format("key={0}", fireCnf["ServerKey"]);
+            var senderId = string.Format("id={0}", fireCnf["SenderId"]);
 
-            using (var client = new HttpClient())
-
+            var data = new
             {
+                to,
+                notification = new { title, body }
+            };
 
-                client.DefaultRequestHeaders.Add("ServerKey", serverKey);
+            var jsonBody = JsonConvert.SerializeObject(data);
 
-                using (var sContent = new StringContent(JsonConvert.SerializeObject(notification), Encoding.UTF8, "application/json"))
+            using (var httpRequest = new HttpRequestMessage(HttpMethod.Post, "https://fcm.googleapis.com/fcm/send"))
+            {
+                httpRequest.Headers.TryAddWithoutValidation("Authorization", serverKey);
+                httpRequest.Headers.TryAddWithoutValidation("Sender", senderId);
+                httpRequest.Content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
 
+                using (var httpClient = new HttpClient())
                 {
+                    var result = await httpClient.SendAsync(httpRequest);
 
-                    using (var response = await client.PostAsync(baseUrl + "/v1/notifications/server", sContent))
-
+                    if (result.IsSuccessStatusCode)
                     {
-
-                        var content = await response.Content.ReadAsStringAsync();
-
+                        return true;
                     }
-
                 }
-
             }
+            return false;
+        }
+         
 
+        public async Task<bool> SendNotification(SendPushMessageCommand message)
+        { 
+            if (string.IsNullOrWhiteSpace(message.notification.token))
+            {
+                return false;
+            } 
+
+            var result = await NotifyAsync(message.notification.token, "Norm Bildirimi", JsonConvert.SerializeObject(message));
+
+            return result;
         }
     }
 }

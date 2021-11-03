@@ -31,6 +31,7 @@ namespace Notification.EmailAPI.Controllers
             var sendEndPoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:send-email-service"));
             var sendSMSMessageCommand = _mapper.Map<SendEmailMessageCommand>(emailSendDto);
             await sendEndPoint.Send<SendEmailMessageCommand>(sendSMSMessageCommand);
+       
             return Ok();
         }
     }

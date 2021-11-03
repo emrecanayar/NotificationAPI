@@ -11,4 +11,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\shared\Notification.Shared\Notification.Shared.csproj" />
+    <ProjectReference Include="..\..\..\SKNotify\SKNotify.csproj" />
+  </ItemGroup>
+
 </Project>

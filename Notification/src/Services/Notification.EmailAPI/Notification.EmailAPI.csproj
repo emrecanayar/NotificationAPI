@@ -5,15 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Helpers\**" />
+    <Content Remove="Helpers\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.2.3" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

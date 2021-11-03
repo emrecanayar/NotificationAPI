@@ -46,13 +46,15 @@ namespace Notification.SendEmailAPI
                     cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
                     {
                         host.Username("guest");
-                        host.Password("guest");
+                        host.Password("guest"); 
                     });
 
                     cfg.ReceiveEndpoint("send-email-service", e =>
                     {
                         e.ConfigureConsumer<SendEmailMessageCommandConsumer>(context);
                     });
+
+                    cfg.AutoDelete = true;
                 });
             });
 

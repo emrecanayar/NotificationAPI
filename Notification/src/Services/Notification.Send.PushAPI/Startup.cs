@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Notification.Send.PushAPI.Applicataion.Abstract;
 using Notification.Send.PushAPI.Applicataion.Concrete;
 using Notification.Send.PushAPI.Applicataion.Consumers;
+using Notification.Send.PushAPI.PushNotification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,9 @@ namespace Notification.Send.PushAPI
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public IConfiguration Configuration { get; } 
         public void ConfigureServices(IServiceCollection services)
-        {
-
-
-
-            //Default port => 5672
+        { 
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<SendPushMessageCommandConsumer>();
@@ -48,6 +43,7 @@ namespace Notification.Send.PushAPI
                     {
                         e.ConfigureConsumer<SendPushMessageCommandConsumer>(context);
                     });
+                    cfg.AutoDelete = true;
                 });
             });
 

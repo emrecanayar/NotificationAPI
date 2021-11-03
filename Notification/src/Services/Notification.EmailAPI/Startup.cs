@@ -43,6 +43,8 @@ namespace Notification.EmailAPI
                         host.Username("guest");
                         host.Password("guest");
                     });
+
+                    cfg.AutoDelete = true;
                 });
             });
 
