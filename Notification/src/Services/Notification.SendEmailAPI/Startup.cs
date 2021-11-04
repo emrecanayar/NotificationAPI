@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Notification.SendEmailAPI.Applicaiton.Consumers;
 using Notification.SendEmailAPI.Extensions;
 using Notification.SendEmailAPI.Models;
+using Notification.Shared.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +31,13 @@ namespace Notification.SendEmailAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add<ApiExceptionFilter>());
             services.Configure<SmtpSettings>(Configuration.GetSection("SmtpSettings"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification.SendEmailAPI", Version = "v1" });
             });
-            
+
             //Default port => 5672
             services.AddMassTransit(x =>
             {
@@ -46,7 +47,7 @@ namespace Notification.SendEmailAPI
                     cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
                     {
                         host.Username("guest");
-                        host.Password("guest"); 
+                        host.Password("guest");
                     });
 
                     cfg.ReceiveEndpoint("send-email-service", e =>

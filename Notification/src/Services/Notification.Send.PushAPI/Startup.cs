@@ -11,6 +11,7 @@ using Notification.Send.PushAPI.Applicataion.Abstract;
 using Notification.Send.PushAPI.Applicataion.Concrete;
 using Notification.Send.PushAPI.Applicataion.Consumers;
 using Notification.Send.PushAPI.PushNotification;
+using Notification.Shared.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace Notification.Send.PushAPI
 
         public IConfiguration Configuration { get; } 
         public void ConfigureServices(IServiceCollection services)
-        { 
+        {
+            services.AddControllers(options => options.Filters.Add<ApiExceptionFilter>());
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<SendPushMessageCommandConsumer>();
@@ -52,7 +54,6 @@ namespace Notification.Send.PushAPI
             services.AddMassTransitHostedService();
 
             services.AddTransient<INotificationPublisherService, NotificationPublisherService>();
-            services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification.Send.PushAPI", Version = "v1" });

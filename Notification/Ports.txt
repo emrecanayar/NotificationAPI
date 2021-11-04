@@ -1,0 +1,7 @@
+Local Ports
+*************************
+Notification.EmailAPI			  => 2000
+Notification.SendEmailAPI		  => 2001
+Notification.PushAPI			  => 2002
+Notification.Send.PushAPI         => 2003
+
