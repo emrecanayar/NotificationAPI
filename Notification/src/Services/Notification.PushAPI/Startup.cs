@@ -41,7 +41,7 @@ namespace Notification.PushAPI
             //Default port => 5672
             services.AddMassTransit(x =>
             {
- 
+
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
@@ -50,11 +50,11 @@ namespace Notification.PushAPI
                         host.Password("guest");
                     });
                     cfg.AutoDelete = true;
-                 
+
                 });
             });
 
-     
+
 
             services.AddMassTransitHostedService();
 
@@ -67,14 +67,12 @@ namespace Notification.PushAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notification.PushAPI v1"));
+
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notification.PushAPI v1"));
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
