@@ -11,7 +11,7 @@ namespace Notification.EmailAPI
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; } 
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,7 +25,7 @@ namespace Notification.EmailAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notification.EmailAPI", Version = "v1" });
             });
-            
+
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>
@@ -34,7 +34,7 @@ namespace Notification.EmailAPI
                     {
                         host.Username("guest");
                         host.Password("guest");
-                    }); 
+                    });
                     cfg.AutoDelete = true;
                 });
             });
@@ -42,19 +42,19 @@ namespace Notification.EmailAPI
             services.AddMassTransitHostedService();
             services.AddAutoMapper(typeof(Startup));
         }
-         
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage(); 
+                app.UseDeveloperExceptionPage();
             }
 
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Notification.EmailAPI v1"));
-            app.UseRouting(); 
-            app.UseAuthorization(); 
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

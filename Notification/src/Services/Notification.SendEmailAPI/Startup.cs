@@ -38,11 +38,11 @@ namespace Notification.SendEmailAPI
                 x.AddConsumer<SendEmailMessageCommandConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
-                    {
-                        host.Username("guest");
-                        host.Password("guest");
-                    });
+                    cfg.Host(Configuration["RabbitMQUrl"],"/", host =>
+                     {
+                         host.Username("guest");
+                         host.Password("guest");
+                     });
 
                     cfg.ReceiveEndpoint("send-email-service", e =>
                     {

@@ -45,10 +45,10 @@ namespace Notification.PushAPI
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
-                    {
-                        host.Username("guest");
-                        host.Password("guest");
-                    });
+                     {
+                         host.Username("guest");
+                         host.Password("guest");
+                     });
                     cfg.AutoDelete = true;
 
                 });
