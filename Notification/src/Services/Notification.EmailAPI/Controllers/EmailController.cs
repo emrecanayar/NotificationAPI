@@ -28,9 +28,17 @@ namespace Notification.EmailAPI.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Send(EmailSendDto emailSendDto)
         {
-            var sendEndPoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:send-email-service"));
-            var sendSMSMessageCommand = _mapper.Map<SendEmailMessageCommand>(emailSendDto);
-            await sendEndPoint.Send<SendEmailMessageCommand>(sendSMSMessageCommand);
+            try
+            {
+                var sendEndPoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:send-email-service"));
+                var sendSMSMessageCommand = _mapper.Map<SendEmailMessageCommand>(emailSendDto);
+                await sendEndPoint.Send<SendEmailMessageCommand>(sendSMSMessageCommand);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
             return Ok();
         }
