@@ -34,5 +34,6 @@ namespace Notification.EmailAPI.Controllers
 
             return Ok();
         }
+
     }
 }
