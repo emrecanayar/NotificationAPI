@@ -35,7 +35,7 @@ namespace Notification.Send.PushAPI
                 x.AddConsumer<SendPushMessageCommandConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    cfg.Host(Configuration["RabbitMQUrl"],"/", host =>
                     {
                         host.Username("guest");
                         host.Password("guest");
